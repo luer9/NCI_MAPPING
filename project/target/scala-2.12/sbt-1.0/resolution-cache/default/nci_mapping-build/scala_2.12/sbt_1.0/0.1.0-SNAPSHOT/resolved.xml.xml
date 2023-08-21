@@ -4,7 +4,7 @@
 		module="nci_mapping-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20221218121056"
+		publication="20230503222618"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>

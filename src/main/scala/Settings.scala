@@ -22,7 +22,7 @@ object Settings {
     Logger.getLogger("akka").setLevel(Level.WARN)
     val conf = new SparkConf()
       .setAppName("NCI_MAPPING")
-//      .setMaster("local[*]")
+      .setMaster("local[*]")
 //      .set("spark.executor.memory", "8g")
 //        .set("spark.driver.memory", "8g")
 //        .set("spark.executor.heartbeatInterval", "20s")

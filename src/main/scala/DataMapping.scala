@@ -1,7 +1,12 @@
+
+import org.apache.spark.broadcast.Broadcast
+
 import java.io.File
 import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.sql.{DataFrame, Encoders, SparkSession}
+import org.apache.spark.sql.{DataFrame, Dataset, Encoders, SparkSession}
+import org.apache.spark.storage.StorageLevel
 
+import java.util.regex.Pattern
 import scala.collection.immutable.HashMap
 
 object DataMapping {
@@ -22,6 +27,25 @@ object DataMapping {
       .toDF()
     tris
   }
+    // watdiv dataset
+//    def read(inputFile: String): DataFrame = {
+//      import spark.implicits._
+//      val pattern: Broadcast[Pattern] = spark.sparkContext.broadcast(Pattern.compile("[^a-zA-Z0-9]")) // 只允许出现 (字母和数字)
+//      val pattern2: Broadcast[Pattern] = spark.sparkContext.broadcast(Pattern.compile("\\s+.$")) // 删除末尾的空格
+//
+//      // 读入三元组操作，并在谓词部分做一个 matcher 过滤的作用。
+//      val data: Dataset[(String, String, String)] = spark.read.textFile(inputFile)
+//        .filter(x => x.startsWith("<"))
+//        .map {
+//          triple =>
+//            val element: Array[String] = triple.split("\t")
+//            val matcher: String = pattern.value.matcher(element(1)).replaceAll("").toLowerCase() // 保证谓词是纯字母 和 数字【因为要做文件名】
+//            val e2: String = pattern2.value.matcher(element(2)).replaceAll("") // 去点末尾的 空格 和点
+//
+//            (element(0), matcher, e2)
+//        }.persist(StorageLevel.DISK_ONLY) // 磁盘持久化
+//      data.toDF("sub", "pred", "obj")
+//    }
   def getPreds(tri: DataFrame): Seq[String] = {
     val seq = tri.select("pred").distinct()
       .collect().map(row => row.toString()).toSeq
@@ -41,7 +65,7 @@ object DataMapping {
     println("[inputFile] " + inputFile)
     println("[outputDIR] " + outputDIR)
     println("[process] " + fileName)
-    frame.show()
+    frame.show(200,false)
     // 新想法【不会产生大量的对象】
     // 生成pred index
     // so index
@@ -53,7 +77,7 @@ object DataMapping {
       .rdd.zipWithIndex().toDF()
       .withColumnRenamed("_1", "pred")
       .withColumnRenamed("_2", "predID")
-    preds.show()
+    preds.show(false)
     preds.write.parquet(outputDIR + File.separator + fileName + File.separator + fileName + ".p")
     println("[PRED SAVE DONE]")
     // ===== so
@@ -73,7 +97,7 @@ object DataMapping {
         .replace("]", ""), row)
     }(encoder)
       .withColumnRenamed("_1", "sos").toDF()
-    frame1.show()
+    frame1.show(false)
 
     val so = frame1.select("sos")
       .map(row => row.toString().replace("[", "").replace("]", ""))
@@ -81,7 +105,7 @@ object DataMapping {
       .toDF()
       .withColumnRenamed("_1", "sos")
       .withColumnRenamed("_2", "sosID")
-    so.show()
+    so.show(false)
     so.write.parquet(outputDIR + File.separator + fileName + File.separator + fileName + ".so")
     println("[SO SAVE DONE]")
     // join
@@ -99,7 +123,7 @@ object DataMapping {
       .withColumnRenamed("predID", "pred")
       .withColumnRenamed("objID", "obj")
       .toDF()
-    frame2.show()
+    frame2.show(false)
     frame2.write.parquet(outputDIR + File.separator + fileName + File.separator + fileName + ".tri")
 
 //    frame2.show()

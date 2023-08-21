@@ -7,7 +7,7 @@
 		revision="0.1"
 		conf="test"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20221219201328"/>
+		date="20230413201721"/>
 	<dependencies>
 		<module organisation="org.xerial.snappy" name="snappy-java">
 			<revision name="1.1.8.4" status="release" pubdate="20210125232617" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/xerial/snappy-java" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master, runtime(*), master(compile), compile(*)" position="157">
