@@ -6,8 +6,8 @@ object Main {
 //    val outputDIR = "/Users/luyang/Documents/project/db/NCI_MAPPING/"
 //    val inputFile = "/Users/luyang/Documents/project/db/NCI_INDEX/Benchmark/dataset/BeSEPPIgraph.nt"
 //    val outputDIR = "/Users/luyang/Documents/project/db/NCI_INDEX/Benchmark/"
-      val inputFile = "/Users/luyang/Documents/project/db/AiswcJAR/uobm1.nt"
-      val outputDIR = "/Users/luyang/Documents/project/db/NCI_INDEX/uobm1/"
+      val inputFile = "F:\\data\\uobm100.nt"
+      val outputDIR = "F:\\dbproject\\NCI_MAPPING\\data"
     Settings.loadUserSettings(inputFile, outputDIR)
 
     // inputfile outputDIR

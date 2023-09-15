@@ -1,0 +1,11 @@
+target/
+
+.idea/
+.bsp/
+DS_Store/
+*.iml
+*.nt
+data/
+RESULT/
+
+project/

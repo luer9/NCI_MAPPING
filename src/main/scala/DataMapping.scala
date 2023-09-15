@@ -59,7 +59,7 @@ object DataMapping {
     seq
   }
   def dataMapping(inputFile: String, outputDIR: String): Unit = {
-    var fileName = inputFile.substring(inputFile.lastIndexOf("/") + 1)
+    var fileName = inputFile.substring(inputFile.lastIndexOf("\\") + 1)
     val frame = read(inputFile)
     fileName = fileName.substring(0, fileName.lastIndexOf(".") )
     println("[inputFile] " + inputFile)
